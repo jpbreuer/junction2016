@@ -1,0 +1,58 @@
+.mailsnail img {
+    width: 230px; 
+    height: 100px;
+}
+
+
+body {
+    font-size:1.4em;
+
+}
+b {
+  background-color: blue;
+}
+
+
+
+/*Overriding calendar*/
+#calendar {
+    margin-top:2.2em;
+}
+
+.fc-toolbar h2 {
+    font-size:2em;
+}
+
+/* Task page */
+.task-list input[type=text] {
+    width:100%;
+}
+
+.task-list article {
+    border-bottom:1px solid #ccc;
+}
+.workers-list a {
+    display: inline-block;
+    padding:0.5em;
+
+    font-size:1.2em;
+
+    margin-top:0.5em;
+    margin-right:0.5em;
+}
+
+.buttons-complete-add {
+    text-align: center;
+    display: block;
+}
+
+.navbar {
+    margin-bottom: 0px;
+
+}
+.container-fluid.mailsnail {
+    padding-bottom: 20px
+}
+.personality {
+    font-color: black;
+}

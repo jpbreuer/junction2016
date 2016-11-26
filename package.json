@@ -1,0 +1,28 @@
+{
+  "name": "responsive-platformspecific-app",
+  "version": "1.0.0",
+  "description": "How to use MDB: https://www.npmjs.com/package/bootstrap-material-design",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrap-material-design": "^0.5.10",
+    "font-awesome": "^4.7.0",
+    "fullcalendar": "^3.0.1",
+    "local-web-server": "^1.2.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alessandrocapra/responsive-platformspecific-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alessandrocapra/responsive-platformspecific-app/issues"
+  },
+  "homepage": "https://github.com/alessandrocapra/responsive-platformspecific-app#readme"
+}
