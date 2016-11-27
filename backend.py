@@ -29,6 +29,8 @@ app.config.update(dict(
 
 mail = Mail(app)
 
+UPLOAD_FOLDER = '/'
+
 @app.route('/api/processing')
 def parse_img():
     im = Image.open("./temp.jpg") # the second one
@@ -39,7 +41,7 @@ def parse_img():
     im.save('./temp2.jpg')
     tr = Tesseract(os.environ["TESSDATA_PREFIX"],"eng")
     text = tr.ocr_image(Image.open('./temp2.jpg'))
-    return text
+    return redirect('http://mailsnail.tech/api/notify')
 
 # def newtonian_temperature_model():
 #T_0 = 76.66 #centigrade
@@ -52,6 +54,7 @@ def parse_img():
 #if T_now < 45:
 #    return "Drink me I'm cool!"
 
+    
 
 @app.route("/api/notify")
 # def get_message_list():
@@ -62,27 +65,36 @@ def parse_img():
 #     messagelist = client.messages.list()
 #     return messagelist
 
-def send_email():
+def send_notification():
+    if request.method == 'POST':
+        # file = request.files['file']
+        # if file and allowed_file(file.filename):
+        #     filename = secure_filename(file.filename)
+        #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #     return redirect(url_for('uploaded_file',filename=filename))
     msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),sender="noreply.mailsnail@gmail.com",bcc=['jeanpaul.breuer@gmail.com'])
     msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
     msg.html = "<b>You have received mail in your physical mailbox!</b>"
     mail.send(msg)
 
-def send_sms():
-    resp = twilio.twiml.Response()
-    resp.message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
-    return str(resp)
-
-def tweet():
     today = datetime.date.today()
     api = twitter.Api(consumer_key=os.environ["TWITTER_CONSUMER_KEY"],
         consumer_secret=os.environ["TWITTER_CONSUMER_SECRET"],
         access_token_key=os.environ["TWITTER_ACCESS_TOKEN_KEY"],
         access_token_secret=os.environ["TWITTER_ACCESS_TOKEN_SECRET"])
-    return api.PostUpdate('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
+    api.PostUpdate('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
+    return "You got mail!"
+    #return "You got mail!"
+
+#def send_sms():
+#    resp = twilio.twiml.Response()
+#    resp.message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
+#    return str(resp)
+
+#def tweet():
 
 
-@app.route("/api/subscribe/new")
+@app.route("/api/subscribe/new", methods=['GET', 'POST'])
 # def get_messages_list():
 #     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
 #     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
@@ -100,8 +112,6 @@ def send_subscribed_email():
     msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
     mail.send(msg)
 
-@app.route("/api/subscribe/new", methods=['GET', 'POST'])
-def send_subscribed_sms():
     resp = twilio.twiml.Response()
     resp.message('Thanks for subscribing to our email notification service!')
     return str(resp)
