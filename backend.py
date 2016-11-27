@@ -82,18 +82,21 @@ def send_email():
     msg.html = "<b>You have received mail in your physical mailbox!</b>"
     mail.send(msg)
 
-def send_sms():
-    resp = twilio.twiml.Response()
-    resp.message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
-    return str(resp)
-
-def tweet():
     today = datetime.date.today()
     api = twitter.Api(consumer_key=os.environ["TWITTER_CONSUMER_KEY"],
         consumer_secret=os.environ["TWITTER_CONSUMER_SECRET"],
         access_token_key=os.environ["TWITTER_ACCESS_TOKEN_KEY"],
         access_token_secret=os.environ["TWITTER_ACCESS_TOKEN_SECRET"])
-    return api.PostUpdate('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
+    api.PostUpdate('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
+    return "You got mail!"
+    #return "You got mail!"
+
+#def send_sms():
+#    resp = twilio.twiml.Response()
+#    resp.message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
+#    return str(resp)
+
+#def tweet():
 
 
 @app.route("/api/subscribe/new")
