@@ -19,6 +19,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import net.bozho.easycamera.DefaultEasyCamera;
 import net.bozho.easycamera.EasyCamera;
 
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     EasyCamera.CameraActions actions;
     EasyCamera.PictureCallback callback;
     Bitmap lastPhoto;
+    String URL = "http://mailsnail.tech/api/notify";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageBitmap(photo);
                 if (lastPhoto != null) {
                     if (areDifferent(lastPhoto, photo)) {
+                        notifyImageChanged();
                         Toast.makeText(MainActivity.this, "Changed!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -109,6 +118,20 @@ public class MainActivity extends AppCompatActivity {
 
     //Notifies the server that the image has changed
     private void notifyImageChanged() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("MSM", "Notified server about new mail");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("MSM", "Unable to notify server about new mail: " + error.getMessage());
+            }
+        });
+
+        queue.add(request);
     }
 
     //Returns whether two images are the same or not
