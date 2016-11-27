@@ -66,7 +66,7 @@ def parse_img():
 #     return messagelist
 
 def send_notification():
-    if request.method == 'POST':
+    #if request.method == 'POST':
         # file = request.files['file']
         # if file and allowed_file(file.filename):
         #     filename = secure_filename(file.filename)
