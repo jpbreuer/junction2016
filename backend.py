@@ -86,7 +86,7 @@ def tweet():
 
 
 @app.route("/api/subscribe/new", methods=['GET', 'POST'])
-def get_message_list():
+def get_messages_list():
     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
  
@@ -100,7 +100,7 @@ def send_subscribed_sms():
     return str(resp)
 
 def send_subscribed_email():
-    msg = Message('Thanks for subscribing to our email notification service!',sender="noreply.mailsnail@gmail.com",bcc=get_message_list())
+    msg = Message('Thanks for subscribing to our email notification service!',sender="noreply.mailsnail@gmail.com",bcc=get_messages_list())
     msg.body = "Thanks for subscribing to our email notification service!"
     msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
     mail.send(msg)
