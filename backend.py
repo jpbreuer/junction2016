@@ -128,5 +128,5 @@ def has_new_mail():
         return "0";
 
 if __name__ == "__main__":
-    global hasMail = False
+    global hasMail
     app.run(host='localhost')
