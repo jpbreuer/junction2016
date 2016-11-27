@@ -90,16 +90,9 @@ public class MainActivity extends AppCompatActivity {
                 Timer timer = new Timer();
                 timer.schedule(new TimerTask() {
 
-                    int times = 0;
-
                     @Override
                     public void run() {
-                        if (times < 10) {
-                            actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback));
-                            times += 1;
-                        } else {
-                            this.cancel();
-                        }
+                        actions.takePicture(EasyCamera.Callbacks.create().withJpegCallback(callback));
                     }
                 }, 3000, 10000);
             }
