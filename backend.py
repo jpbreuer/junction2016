@@ -41,36 +41,32 @@ def parse_img():
     text = tr.ocr_image(Image.open('./temp2.jpg'))
     return text
 
-def newtonian_temperature_model():
-    T_0 = 76.66 #centigrade
-    k = 0.054 #per minute
-    T_a = 23 #centigrade
-    t = range(1,1000,4)
-    #has to be maximum 45 centigrade to drink
-    T_now = T_a + (T_0 + T_a)*np.e**(-k*t)
-    if T_now > 45:
-        return "I'm too hot to drink!"
-    if T_now < 45:
-        return "Drink me I'm cool!"
+# def newtonian_temperature_model():
+#T_0 = 76.66 #centigrade
+#T_a = 40 #centigrade
+#t = np.array(range(1,180,10), dtype=np.uint8)
+#k = np.ones(len(t), dtype=np.uint8)*0.01 #per minute
+#T_now = T_a + (T_0 - T_a)*np.e**(-k*t)
+#if T_now > 45: #has to be maximum 45 centigrade to drink
+#    return "I'm too hot to drink!"
+#if T_now < 45:
+#    return "Drink me I'm cool!"
 
 
 @app.route("/api/notify")
-def get_message_list():
-    TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
-    TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
+# def get_message_list():
+#     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+#     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
  
-    client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
-    messagelist = client.messages.list()
-    return messagelist
+#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
+#     messagelist = client.messages.list()
+#     return messagelist
 
 def send_email():
-    for ii in range(len(get_message_list())):
-        msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),
-                  sender="noreply.mailsnail@gmail.com",
-                  bcc=get_message_list()[ii])
-        msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
-        msg.html = "<b>You have received mail in your physical mailbox!</b>"
-        mail.send(msg)
+    msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),sender="noreply.mailsnail@gmail.com",bcc=['jeanpaul.breuer@gmail.com'])
+    msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
+    msg.html = "<b>You have received mail in your physical mailbox!</b>"
+    mail.send(msg)
 
 def send_sms():
     resp = twilio.twiml.Response()
@@ -86,26 +82,29 @@ def tweet():
     return api.PostUpdate('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
 
 
-@app.route("/api/subscribe/new", methods=['GET', 'POST'])
-def get_messages_list():
-    TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
-    TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
+@app.route("/api/subscribe/new")
+# def get_messages_list():
+#     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
+#     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
  
-    client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
-    messagelist = client.messages.list()
-    return list(messagelist)
+#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
+#     messagelist = client.messages.list()
+#     return messagelist
 
+def send_subscribed_email():
+    msg = Message('Thanks for subscribing to our email notification service!',
+    sender="noreply.mailsnail@gmail.com",
+    bcc=['jeanpaul.breuer@gmail.com'])
+
+    msg.body = "Thanks for subscribing to our email notification service!"
+    msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
+    mail.send(msg)
+
+@app.route("/api/subscribe/new", methods=['GET', 'POST'])
 def send_subscribed_sms():
     resp = twilio.twiml.Response()
     resp.message('Thanks for subscribing to our email notification service!')
     return str(resp)
-
-def send_subscribed_email():
-    for ii in range(len(get_messages_list())):
-        msg = Message('Thanks for subscribing to our email notification service!',sender="noreply.mailsnail@gmail.com",bcc=get_messages_list()[ii])
-        msg.body = "Thanks for subscribing to our email notification service!"
-        msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
-        mail.send(msg)
 
 if __name__ == "__main__":
     app.run(host='localhost')
