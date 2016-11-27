@@ -29,6 +29,8 @@ app.config.update(dict(
 
 mail = Mail(app)
 
+UPLOAD_FOLDER = '/'
+
 @app.route('/api/processing')
 def parse_img():
     im = Image.open("./temp.jpg") # the second one
@@ -41,6 +43,9 @@ def parse_img():
     text = tr.ocr_image(Image.open('./temp2.jpg'))
     return text
 
+def ping_all():
+    redirect('http://mailsnail.tech/api/notify')
+
 # def newtonian_temperature_model():
 #T_0 = 76.66 #centigrade
 #T_a = 40 #centigrade
@@ -52,6 +57,15 @@ def parse_img():
 #if T_now < 45:
 #    return "Drink me I'm cool!"
 
+@app.route('/', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
 
 @app.route("/api/notify")
 # def get_message_list():
