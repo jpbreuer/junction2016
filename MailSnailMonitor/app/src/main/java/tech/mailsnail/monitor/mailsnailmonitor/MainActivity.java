@@ -107,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Notifies the server that the image has changed
+    private void notifyImageChanged() {
+    }
+
     //Returns whether two images are the same or not
     private boolean areDifferent(Bitmap image1, Bitmap image2) {
         if (image1.getWidth() != image2.getWidth() || image1.getHeight() != image2.getHeight()) {
