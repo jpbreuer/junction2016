@@ -54,15 +54,7 @@ def parse_img():
 #if T_now < 45:
 #    return "Drink me I'm cool!"
 
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file',
-                                    filename=filename))
+    
 
 @app.route("/api/notify")
 # def get_message_list():
@@ -74,6 +66,12 @@ def upload_file():
 #     return messagelist
 
 def send_notification():
+    if request.method == 'POST':
+        # file = request.files['file']
+        # if file and allowed_file(file.filename):
+        #     filename = secure_filename(file.filename)
+        #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #     return redirect(url_for('uploaded_file',filename=filename))
     msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),sender="noreply.mailsnail@gmail.com",bcc=['jeanpaul.breuer@gmail.com'])
     msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
     msg.html = "<b>You have received mail in your physical mailbox!</b>"
