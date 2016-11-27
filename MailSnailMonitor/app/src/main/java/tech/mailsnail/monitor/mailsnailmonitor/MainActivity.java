@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     //Notifies the server that the image has changed
     private void notifyImageChanged() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("MSM", "Notified server about new mail");
