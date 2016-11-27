@@ -41,10 +41,7 @@ def parse_img():
     im.save('./temp2.jpg')
     tr = Tesseract(os.environ["TESSDATA_PREFIX"],"eng")
     text = tr.ocr_image(Image.open('./temp2.jpg'))
-    return text
-
-def ping_all():
-    redirect('http://mailsnail.tech/api/notify')
+    return redirect('http://mailsnail.tech/api/notify')
 
 # def newtonian_temperature_model():
 #T_0 = 76.66 #centigrade
@@ -76,7 +73,7 @@ def upload_file():
 #     messagelist = client.messages.list()
 #     return messagelist
 
-def send_email():
+def send_notification():
     msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),sender="noreply.mailsnail@gmail.com",bcc=['jeanpaul.breuer@gmail.com'])
     msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
     msg.html = "<b>You have received mail in your physical mailbox!</b>"
@@ -99,7 +96,7 @@ def send_email():
 #def tweet():
 
 
-@app.route("/api/subscribe/new")
+@app.route("/api/subscribe/new", methods=['GET', 'POST'])
 # def get_messages_list():
 #     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
 #     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
@@ -117,8 +114,6 @@ def send_subscribed_email():
     msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
     mail.send(msg)
 
-@app.route("/api/subscribe/new", methods=['GET', 'POST'])
-def send_subscribed_sms():
     resp = twilio.twiml.Response()
     resp.message('Thanks for subscribing to our email notification service!')
     return str(resp)
