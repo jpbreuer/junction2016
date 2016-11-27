@@ -118,6 +118,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        if (checkForMailTimer != null) {
+            checkForMailTimer.cancel();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        TimerTask tt = new TimerTask() {
+            @Override
+            public void run() {
+                checkForMail();
+            }
+        };
+        checkForMailTimer = new Timer();
+        checkForMailTimer.schedule(tt, 1000, 5000);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == temp) {
@@ -147,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                     StringBuilder total = new StringBuilder();
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        total.append(line).append('\n');
+                        total.append(line);
                     }
 
                     String result = total.toString();
@@ -170,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(Integer count) {
                 if (count > 0) {
                     showToast("You have received mail!");
+                    imageView.setImageResource(R.drawable.mail0);
                     sendImage(BitmapFactory.decodeResource(MainActivity.this.getResources(), R.drawable.mail0), new DoAfter());
                 }
             }
