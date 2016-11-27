@@ -64,12 +64,13 @@ def get_message_list():
     return messagelist
 
 def send_email():
-    msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),
+    for ii in range(len(get_message_list())):
+        msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),
                   sender="noreply.mailsnail@gmail.com",
-                  bcc=get_message_list())
-    msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
-    msg.html = "<b>You have received mail in your physical mailbox!</b>"
-    mail.send(msg)
+                  bcc=get_message_list()[ii])
+        msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
+        msg.html = "<b>You have received mail in your physical mailbox!</b>"
+        mail.send(msg)
 
 def send_sms():
     resp = twilio.twiml.Response()
@@ -92,7 +93,7 @@ def get_messages_list():
  
     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
     messagelist = client.messages.list()
-    return messagelist
+    return list(messagelist)
 
 def send_subscribed_sms():
     resp = twilio.twiml.Response()
@@ -100,10 +101,11 @@ def send_subscribed_sms():
     return str(resp)
 
 def send_subscribed_email():
-    msg = Message('Thanks for subscribing to our email notification service!',sender="noreply.mailsnail@gmail.com",bcc=get_messages_list())
-    msg.body = "Thanks for subscribing to our email notification service!"
-    msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
-    mail.send(msg)
+    for ii in range(len(get_messages_list())):
+        msg = Message('Thanks for subscribing to our email notification service!',sender="noreply.mailsnail@gmail.com",bcc=get_messages_list()[ii])
+        msg.body = "Thanks for subscribing to our email notification service!"
+        msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
+        mail.send(msg)
 
 if __name__ == "__main__":
     app.run(host='localhost')
