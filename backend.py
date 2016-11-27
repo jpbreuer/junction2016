@@ -32,8 +32,16 @@ app.config['SOCIAL_TWITTER'] = {
     'consumer_secret': os.environ["TWITTER_CONSUMER_SECRET"]
 }
 
-
 mail = Mail(app)
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template(
+        'profile.html',
+        content='Profile Page',
+        twitter_conn=social.twitter.get_connection())
+
 
 @app.route('/api/processing')
 def parse_img():
