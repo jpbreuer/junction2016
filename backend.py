@@ -27,6 +27,8 @@ app.config.update(dict(
     MAIL_PASSWORD = os.environ["MAIL_PASSWORD"],
 ))
 
+hasMail = False
+
 mail = Mail(app)
 
 UPLOAD_FOLDER = '/'
@@ -54,14 +56,14 @@ def parse_img():
 #if T_now < 45:
 #    return "Drink me I'm cool!"
 
-    
+
 
 @app.route("/api/notify")
 # def get_message_list():
 #     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
 #     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
- 
-#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
+
+#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 #     messagelist = client.messages.list()
 #     return messagelist
 
@@ -72,6 +74,7 @@ def send_notification():
         #     filename = secure_filename(file.filename)
         #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #     return redirect(url_for('uploaded_file',filename=filename))
+    hasMail = True
     msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),sender="noreply.mailsnail@gmail.com",bcc=['jeanpaul.breuer@gmail.com'])
     msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
     msg.html = "<b>You have received mail in your physical mailbox!</b>"
@@ -98,8 +101,8 @@ def send_notification():
 # def get_messages_list():
 #     TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
 #     TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
- 
-#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN) 
+
+#     client = TwilioRestClient(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 #     messagelist = client.messages.list()
 #     return messagelist
 
@@ -115,6 +118,14 @@ def send_subscribed_email():
     resp = twilio.twiml.Response()
     resp.message('Thanks for subscribing to our email notification service!')
     return str(resp)
+
+@app.route("/api/mail/has")
+def has_new_mail():
+    if (hasMail):
+        hasMail = False;
+        return 1;
+    else:
+        return 0;
 
 if __name__ == "__main__":
     app.run(host='localhost')
