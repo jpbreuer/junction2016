@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MailSnail</title>
+
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Import files for Bootstrap, MD and FontAwesome -->
+    <link rel="stylesheet" href="node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-material-design/dist/css/ripples.min.css">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!--My css-->
+    <link rel="stylesheet" href="style.css">
+    <!--<link href="http://cdn.rawgit.com/FezVrasta/dropdown.js/master/jquery.dropdown.css" rel="stylesheet">-->
+
+</head>
+
+<body>
+    <header style="background-color: #03a9f4">
+        <nav class="navbar navbar-info">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+                    <a class="navbar-brand" href="#">MailSnail</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="signup.html">Sign up</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="account.html">Manage account</a></li>
+                    </ul>
+                </div>
+    </header>
+    <div class="container-fluid mailsnail" style="background-color: #03a9f4">
+        <a href='index.html' target='_blank'><img class="smaller-image img-responsive" src='https://s11.postimg.org/aw54drabn/Snailmail.png' border='0' alt='Snailmail' height="200" width="300" />
+        </a>
+    </div>
+    <main>
+        <div class="container">
+            <div class=".col-md-8 .offset-md-3">
+
+                <h1 class="text-center">Manage your settings</h1>
+                <br>
+                <p>Please type in your mailbox ID</p>
+                <input class="form-control" type="text" placeholder="mailbox ID" required>
+                <div class="workers-list">
+                    <a href="account.html" class="label label-info">Submit</a>
+                    <br>
+                    <br>
+                    <br>
+                    <h3 class="text-center">Select devices and accounts you wish to connect</h3>
+                    <br>
+                    <br>
+                    <div class=".col-md-8 .offset-md-3">
+
+                        <label><input type="checkbox" name="personality"> Send me the text alerts about my mail </label>
+                        <br>
+                        <br>
+                        <label><input type="checkbox" name="personality"> Tweet me the alerts about my mail </label>
+                        <br>
+                        <img alt="Sign in with Twitter" src="https://g.twimg.com/dev/sites/default/files/images_documentation/sign-in-with-twitter-gray.png">
+                        <br>
+                        <br>
+                        <center>
+                            <h3>Have a Muki Mug? Connect it and create a chain of smart devices</h3>
+                        </center>
+                        <br>
+                        <center><img src="http://www.pauligshop.fi/media/catalog/product/cache/12/image/480x/9df78eab33525d08d6e5fb8d27136e95/m/u/muki_anthrazite.png" height="200" width="300" /></center>
+
+                        <br>
+
+                        <label><input type="checkbox" name="personality"> Send me the alerts about my mail to my Muki Mug </label>
+                        <br>
+                        <br>
+                        <label><input type="checkbox" name="personality"> Show my Muki drink's temperature </label>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="workers-list">
+                        <p>Don't know what a Muki Mug is? <a href="http://www.pauligshop.fi/fi_fi/paulig-muki?lang=en"> Read all about it</a> </p>
+                        <a href="account.html" class="label label-info">Submit</a>
+                    </div>
+
+
+
+
+
+
+                </div>
+    </main>
