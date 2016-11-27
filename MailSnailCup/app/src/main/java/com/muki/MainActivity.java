@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MukiCupApi mMukiCupApi;
     private int temp = 15;
     private static final String SERIAL = "0004180";
-    private static final String URL_UNREAD_MAIL = "http://85.188.13.246:8080/test";
+    private static final String URL_UNREAD_MAIL = "http://mailsnail.tech/api/mail/has";
     private Timer checkForMailTimer;
     private ImageView imageView;
 

@@ -123,9 +123,10 @@ def send_subscribed_email():
 def has_new_mail():
     if (hasMail):
         hasMail = False;
-        return 1;
+        return "1";
     else:
-        return 0;
+        return "0";
 
 if __name__ == "__main__":
+    global hasMail = False
     app.run(host='localhost')
