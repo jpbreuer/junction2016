@@ -27,21 +27,7 @@ app.config.update(dict(
     MAIL_PASSWORD = os.environ["MAIL_PASSWORD"],
 ))
 
-app.config['SOCIAL_TWITTER'] = {
-    'consumer_key': os.environ["TWITTER_CONSUMER_KEY"],
-    'consumer_secret': os.environ["TWITTER_CONSUMER_SECRET"]
-}
-
 mail = Mail(app)
-
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template(
-        'profile.html',
-        content='Profile Page',
-        twitter_conn=social.twitter.get_connection())
-
 
 @app.route('/api/processing')
 def parse_img():
@@ -114,7 +100,7 @@ def send_subscribed_sms():
     return str(resp)
 
 def send_subscribed_email():
-    msg = Message('Thanks for subscribing to our email notification service!'),sender="noreply.mailsnail@gmail.com",bcc=get_message_list())
+    msg = Message('Thanks for subscribing to our email notification service!',sender="noreply.mailsnail@gmail.com",bcc=get_message_list())
     msg.body = "Thanks for subscribing to our email notification service!"
     msg.html = "<b>Thanks for subscribing to our email notification service!</b>"
     mail.send(msg)
