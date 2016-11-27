@@ -74,6 +74,7 @@ def send_notification():
         #     filename = secure_filename(file.filename)
         #     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #     return redirect(url_for('uploaded_file',filename=filename))
+    global hasMail
     hasMail = True
     msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),sender="noreply.mailsnail@gmail.com",bcc=['jeanpaul.breuer@gmail.com'])
     msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
