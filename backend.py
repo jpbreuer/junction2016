@@ -67,7 +67,7 @@ def send_email():
     msg = Message('MailSnail has arrived! Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()),
                   sender="noreply.mailsnail@gmail.com",
                   bcc=get_message_list())
-    msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now()
+    msg.body = "You have received mail in your physical mailbox! Timestamp: {:%Y-%m-%d %H:%M:%S}".format(datetime.datetime.now())
     msg.html = "<b>You have received mail in your physical mailbox!</b>"
     mail.send(msg)
 
