@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.muki.core.MukiCupApi;
@@ -35,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private int temp = 15;
     private static final String SERIAL = "0004180";
     private static final String URL_UNREAD_MAIL = "http://85.188.13.246:8080/test";
-    private int mailCount = 0;
     private Timer checkForMailTimer;
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, temp);
 
         }
+
+        imageView = (ImageView) findViewById(R.id.imageView_preview);
+        imageView.setImageResource(R.drawable.cooldown);
 
         mMukiCupApi = new MukiCupApi(getApplicationContext(), new MukiCupCallback() {
             @Override
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        sendImage(BitmapFactory.decodeResource(this.getResources(), R.drawable.duck),
+        sendImage(BitmapFactory.decodeResource(this.getResources(), R.drawable.cooldown),
                 new DoAfter() {
 
                     @Override
@@ -99,6 +104,16 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
+
+        findViewById(R.id.button_reset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCupId != null) {
+                    imageView.setImageResource(R.drawable.cooldown);
+                    mMukiCupApi.clearImage(mCupId);
+                }
+            }
+        });
 
     }
 
@@ -153,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Integer count) {
-                mailCount = count;
                 if (count > 0) {
+                    showToast("You have received mail!");
                     sendImage(BitmapFactory.decodeResource(MainActivity.this.getResources(), R.drawable.mail0), new DoAfter());
                 }
             }
