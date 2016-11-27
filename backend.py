@@ -121,6 +121,7 @@ def send_subscribed_email():
 
 @app.route("/api/mail/has")
 def has_new_mail():
+    global hasMail
     if (hasMail):
         hasMail = False;
         return "1";
@@ -128,5 +129,4 @@ def has_new_mail():
         return "0";
 
 if __name__ == "__main__":
-    global hasMail
     app.run(host='localhost')
